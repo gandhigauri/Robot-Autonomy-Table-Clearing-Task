@@ -98,24 +98,3 @@ class HerbEnv(object):
 if __name__ == '__main__':
   robo = HerbEnv()
   time.sleep(10000)
-
-        
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
