@@ -1,8 +1,11 @@
-#from DiscreteEnvironment import DiscreteEnvironment
+from DiscreteEnvironment import DiscreteEnvironment
 #from SimpleEnvironment import SimpleEnvironment
+from HerbEnv import HerbEnv
 class Fluents:
+    ''' so we have four fluents: In, Overlaps, IsReachable, Holding
+    '''
     def __init__(self):
-	#self.sim_env = SimpleEnvironment()
+	self.sim_env = SimpleEnvironment()
 	#self.discrete_env = DiscreteEnvironment(sim_env.resolution, sim_env.lower_limits, sim_env.upper_limits)
         #self.val = False                
         #self.washer_location = washLoc  
@@ -13,40 +16,22 @@ class Fluents:
         #self.Clean = False
         #self.In(objLoc,washLoc)=False
                                               
-    def In(self, obj_loc, region):
-        if obj_loc == region:
-            print("object placed in required destination")
-            return True
-        else:        
-            print ("object is not in any desired location")
-            return False 
-
-    #def Overlaps(self,object_loc,region)
-                        
-    def ClearX(self,rob_loc,obj_loc):
-        rob_x=robo_loc[0]
-        rob_y=robo_loc[1]
-        neighbor=[[rob_x-1,rob_y-1],[rob_x-1,rob_y],[rob_x-1,rob_y+1],[rob_x,rob_y-1],[rob_x,rob_y+1],[rob_x+1,rob_y-1],[rob_x+1,rob_y],[rob_x+1,rob_y+1]]
-        for element in neighbor:
-            if obj_loc == element:
-                print("robot found object in neighbourhood")
+    #lek edit
+    def In(self,objname,region):
+        obj = self.env.GetKinBody(objname)
+        pos = obj.GetTransform()[:2,3]
+        if (pos[0] > self.min_x) and (pos[0]< self.max_x) and (pos[1]>self.min_y) and (pos[1]<self.max_y):
+                print("\n Object is in")
                 return True
-            else:        
-                print ("robot still wandering")
-                return False 
-                                                        
-    def Holding(self,grasp,objec3t_id):
-        if (grasp):
-            print "holding object" object_id
-            return object_id
-        else:
-            print("not holding anything")
-            return None
+        print("***Object is not in***")
+        return False                                         
 
-    def Clean(self,washed,object_id) 
-        if (washed):
-            print "clean object" object_id
-            return True
-        else:
-            print("not washed anything")
-            return False
+    def Overlaps(self,object_loc,region)
+                                        
+    #keech edit                
+    def Holding(self):
+        for b in self.env.GetBodies():
+            if self.robot.IsGrabbing(b)
+                return b.GetName()
+            return None
+            

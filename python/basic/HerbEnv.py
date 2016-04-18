@@ -11,8 +11,6 @@ class HerbEnv(object):
     def __init__(self):
         self.openrave_init()
 
-
-
     def openrave_init(self):
         self.env = openravepy.Environment()
         self.env.SetViewer('qtcoin')
