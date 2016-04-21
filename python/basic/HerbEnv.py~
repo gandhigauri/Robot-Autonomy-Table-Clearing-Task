@@ -15,7 +15,7 @@ class HerbEnv(object):
 
     def openrave_init(self):
         self.env = openravepy.Environment()
-        self.env.SetViewer('qtcoin')
+        self.env.SetViewer('RViz')
         self.env.GetViewer().SetName('HPN Viewer')
         #self.env.Load('models/%s.env.xml' %PACKAGE_NAME)
         # time.sleep(3) # wait for viewer to initialize. May be helpful to uncomment
@@ -78,7 +78,7 @@ class HerbEnv(object):
         self.target_kinbody3 = self.env.ReadKinBodyURI('models/data/objects/plastic_plate.kinbody.xml')
         self.robot.GetEnv().Add(self.target_kinbody3)
         plate_pose = np.array([[ 0, 0, 0, 0.7], 
-                                  [-1, 0,  1, 0], 
+                                  [-1, 0,  1, -0.3], 
                                   [ 0, 1,  0, 0.7165], 
                                   [ 0, 0,  0, 1]])
         self.target_kinbody3.SetTransform(plate_pose)

@@ -15,8 +15,8 @@ class HerbEnv(object):
 
     def openrave_init(self):
         self.env = openravepy.Environment()
-        self.env.SetViewer('qtcoin')
-        self.env.GetViewer().SetName('HPN Viewer')
+        self.env.SetViewer('RViz')
+        #self.env.GetViewer().SetName('HPN Viewer')
         #self.env.Load('models/%s.env.xml' %PACKAGE_NAME)
         # time.sleep(3) # wait for viewer to initialize. May be helpful to uncomment
         self.name = 'herb'
@@ -56,7 +56,7 @@ class HerbEnv(object):
                                    [ 0.94516159, -0.0901412 ,  0.31391738, -0.87847549],
                                    [ 0.02023372, -0.9431516 , -0.33174637,  1.61502194],
                                    [ 0.        ,  0.        ,  0.        ,  1.        ]])
-        self.robot.GetEnv().GetViewer().SetCamera(camera_pose)
+        #self.robot.GetEnv().GetViewer().SetCamera(camera_pose)
 
         #add kinbodies
         self.target_kinbody1 = self.env.ReadKinBodyURI('models/data/objects/plastic_glass.kinbody.xml')
