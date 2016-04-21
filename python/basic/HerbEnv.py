@@ -11,8 +11,6 @@ class HerbEnv(object):
     def __init__(self):
         self.openrave_init()
 
-
-
     def openrave_init(self):
         self.env = openravepy.Environment()
         self.env.SetViewer('RViz')
@@ -59,6 +57,7 @@ class HerbEnv(object):
         #self.robot.GetEnv().GetViewer().SetCamera(camera_pose)
 
         #add kinbodies
+        #glass
         self.target_kinbody1 = self.env.ReadKinBodyURI('models/data/objects/plastic_glass.kinbody.xml')
         self.robot.GetEnv().Add(self.target_kinbody1)
         glass_pose = np.array([[ 0, 0, 0, 0.7], 
@@ -67,6 +66,7 @@ class HerbEnv(object):
                                   [ 0, 0,  0, 1]])
         self.target_kinbody1.SetTransform(glass_pose)
 
+        #bowl
         self.target_kinbody2 = self.env.ReadKinBodyURI('models/data/objects/plastic_bowl.kinbody.xml')
         self.robot.GetEnv().Add(self.target_kinbody2)
         bowl_pose = np.array([[ 0, 0, 0, 0.5], 
@@ -75,6 +75,7 @@ class HerbEnv(object):
                                   [ 0, 0,  0, 1]])
         self.target_kinbody2.SetTransform(bowl_pose)
 
+        #plate
         self.target_kinbody3 = self.env.ReadKinBodyURI('models/data/objects/plastic_plate.kinbody.xml')
         self.robot.GetEnv().Add(self.target_kinbody3)
         plate_pose = np.array([[ 0, 0, 0, 0.7], 
@@ -82,7 +83,6 @@ class HerbEnv(object):
                                   [ 0, 1,  0, 0.7165], 
                                   [ 0, 0,  0, 1]])
         self.target_kinbody3.SetTransform(plate_pose)
-
 
         #add tray
         self.target_tray = self.env.ReadKinBodyURI('models/data/objects/wicker_tray.kinbody.xml')
@@ -96,24 +96,3 @@ class HerbEnv(object):
 if __name__ == '__main__':
   robo = HerbEnv()
   time.sleep(10000)
-
-        
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
