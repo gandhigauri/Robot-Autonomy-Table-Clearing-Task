@@ -1,7 +1,7 @@
 import openravepy
 import numpy as np
 import time
-from Fluents import Fluents
+#from Fluents import Fluents
 
 openravepy.RaveInitialize(True, level=openravepy.DebugLevel.Info)
 openravepy.misc.InitOpenRAVELogging()
@@ -10,8 +10,8 @@ openravepy.misc.InitOpenRAVELogging()
 class HerbEnv(object):
 
     def __init__(self):
-	    self.fluent = Fluents()
-	    self.openrave_init()
+        self.fluent = Fluents()
+        self.openrave_init()
 	
   
 
@@ -61,8 +61,9 @@ class HerbEnv(object):
         self.robot.GetEnv().GetViewer().SetCamera(camera_pose)
 
         #add kinbodies
-        #glass
-        self.target_kinbody1 = self.env.ReadKinBodyURI('models/data/objects/plastic_glass.kinbody.xml')
+        #glass 1
+        self.target_kinbody1 = self.env.ReadKinBodyURI('models/data/objects/glass.kinbody.xml')
+        self.target_kinbody1.SetName("glass1")
         self.robot.GetEnv().Add(self.target_kinbody1)
         glass_pose = np.array([[ 0, 0, 0, 0.7], 
                                   [-1, 0,  1, -0.5], 
@@ -70,8 +71,10 @@ class HerbEnv(object):
                                   [ 0, 0,  0, 1]])
         self.target_kinbody1.SetTransform(glass_pose)
 
-        #bowl
-        self.target_kinbody2 = self.env.ReadKinBodyURI('models/data/objects/plastic_bowl.kinbody.xml')
+        #glass 2
+        self.target_kinbody2 = self.env.ReadKinBodyURI('models/data/objects/glass.kinbody.xml')
+        self.target_kinbody2.SetName("glass2")
+        #print self.target_kinbody2.GetName()
         self.robot.GetEnv().Add(self.target_kinbody2)
         bowl_pose = np.array([[ 0, 0, 0, 0.5], 
                                   [-1, 0,  1, -0.4], 
@@ -79,8 +82,9 @@ class HerbEnv(object):
                                   [ 0, 0,  0, 1]])
         self.target_kinbody2.SetTransform(bowl_pose)
 
-        #plate
-        self.target_kinbody3 = self.env.ReadKinBodyURI('models/data/objects/plastic_plate.kinbody.xml')
+        #glass 3
+        self.target_kinbody3 = self.env.ReadKinBodyURI('models/data/objects/glass.kinbody.xml')
+        self.target_kinbody2.SetName("glass3")
         self.robot.GetEnv().Add(self.target_kinbody3)
         plate_pose = np.array([[ 0, 0, 0, 0.7], 
                                   [-1, 0,  1, -0.3], 
@@ -96,8 +100,12 @@ class HerbEnv(object):
                                   [ 0, 0,  1, 0.7165], 
                                   [ 0, 0,  0, 1]])
         self.target_tray.SetTransform(tray_pose)
-        self.fluent.In(self.target_kinbody1,[0.5,0.8,-0.6,-0.3])
-        self.fluent.Overlaps(self.target_kinbody1)
+
+        #creating object list
+        self.obj_list=[self.target_kinbody1, self.target_kinbody2, self.target_kinbody3]
+
+        #self.fluent.In(self.target_kinbody1,[0.5,0.8,-0.6,-0.3])
+        #self.fluent.Overlaps(self.target_kinbody1)
         #self.fluent.Holding(self.target_tray)
 
 if __name__ == '__main__':
