@@ -1,6 +1,0 @@
-import Fluents from Fluents
-
-class Operators:
-    def __init__(self,grid_map)
-    self.fluents=Fluents()    
-

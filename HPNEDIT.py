@@ -1,4 +1,4 @@
-from Goal_states import Goal_states
+from Fluents import Fluents
 import time
 
 def HPN():
@@ -54,5 +54,5 @@ if __name__ == "__main__":
         washer_loc = [5,5]
         storage_loc = [3,5]
         robot_loc = [6,0]
-        goal = Goal_states(washer_loc,storage_loc,robot_loc,object_loc)
+        goal = Fluents()
         main()
