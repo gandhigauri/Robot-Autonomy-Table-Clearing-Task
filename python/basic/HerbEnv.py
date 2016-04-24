@@ -1,6 +1,7 @@
 import openravepy
 import numpy as np
 import time
+from Fluents import Fluents
 
 openravepy.RaveInitialize(True, level=openravepy.DebugLevel.Info)
 openravepy.misc.InitOpenRAVELogging()
@@ -9,12 +10,15 @@ openravepy.misc.InitOpenRAVELogging()
 class HerbEnv(object):
 
     def __init__(self):
-        self.openrave_init()
+	    self.fluent = Fluents()
+	    self.openrave_init()
+	
+  
 
     def openrave_init(self):
         self.env = openravepy.Environment()
-        self.env.SetViewer('RViz')
-        #self.env.GetViewer().SetName('HPN Viewer')
+        self.env.SetViewer('qtcoin')
+        self.env.GetViewer().SetName('HPN Viewer')
         #self.env.Load('models/%s.env.xml' %PACKAGE_NAME)
         # time.sleep(3) # wait for viewer to initialize. May be helpful to uncomment
         self.name = 'herb'
@@ -54,7 +58,7 @@ class HerbEnv(object):
                                    [ 0.94516159, -0.0901412 ,  0.31391738, -0.87847549],
                                    [ 0.02023372, -0.9431516 , -0.33174637,  1.61502194],
                                    [ 0.        ,  0.        ,  0.        ,  1.        ]])
-        #self.robot.GetEnv().GetViewer().SetCamera(camera_pose)
+        self.robot.GetEnv().GetViewer().SetCamera(camera_pose)
 
         #add kinbodies
         #glass
@@ -92,6 +96,9 @@ class HerbEnv(object):
                                   [ 0, 0,  1, 0.7165], 
                                   [ 0, 0,  0, 1]])
         self.target_tray.SetTransform(tray_pose)
+        self.fluent.In(self.target_kinbody1,[0.5,0.8,-0.6,-0.3])
+        self.fluent.Overlaps(self.target_kinbody1)
+        #self.fluent.Holding(self.target_tray)
 
 if __name__ == '__main__':
   robo = HerbEnv()
