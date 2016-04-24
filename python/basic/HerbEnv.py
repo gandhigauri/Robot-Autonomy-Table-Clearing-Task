@@ -1,7 +1,7 @@
 import openravepy
 import numpy as np
 import time
-#from Fluents import Fluents
+from Fluents import Fluents
 
 openravepy.RaveInitialize(True, level=openravepy.DebugLevel.Info)
 openravepy.misc.InitOpenRAVELogging()
@@ -74,7 +74,6 @@ class HerbEnv(object):
         #glass 2
         self.target_kinbody2 = self.env.ReadKinBodyURI('models/data/objects/glass.kinbody.xml')
         self.target_kinbody2.SetName("glass2")
-        #print self.target_kinbody2.GetName()
         self.robot.GetEnv().Add(self.target_kinbody2)
         bowl_pose = np.array([[ 0, 0, 0, 0.5], 
                                   [-1, 0,  1, -0.4], 
@@ -105,7 +104,7 @@ class HerbEnv(object):
         self.obj_list=[self.target_kinbody1, self.target_kinbody2, self.target_kinbody3]
 
         #self.fluent.In(self.target_kinbody1,[0.5,0.8,-0.6,-0.3])
-        #self.fluent.Overlaps(self.target_kinbody1)
+        self.fluent.Overlaps(self.target_tray)
         #self.fluent.Holding(self.target_tray)
 
 if __name__ == '__main__':
