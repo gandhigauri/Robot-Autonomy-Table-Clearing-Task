@@ -1,7 +1,7 @@
 import openravepy
 import numpy as np
 import time
-from Fluents import Fluents
+#from Fluents import Fluents
 
 openravepy.RaveInitialize(True, level=openravepy.DebugLevel.Info)
 openravepy.misc.InitOpenRAVELogging()
@@ -10,7 +10,7 @@ openravepy.misc.InitOpenRAVELogging()
 class HerbEnv(object):
 
     def __init__(self):
-        self.fluent = Fluents()
+        #self.fluent = Fluents()
         self.openrave_init()
 	
   
@@ -102,10 +102,18 @@ class HerbEnv(object):
 
         #creating object list
         self.obj_list=[self.target_kinbody1, self.target_kinbody2, self.target_kinbody3]
-
+        #self.bounding_box(self.target_tray)
         #self.fluent.In(self.target_kinbody1,[0.5,0.8,-0.6,-0.3])
-        self.fluent.Overlaps(self.target_tray)
+        #self.fluent.Overlaps(self.target_tray)
         #self.fluent.Holding(self.target_tray)
+
+    def bounding_box(self,body):
+        obj  = body.ComputeAABB()
+        max_xyz =  obj.pos()+obj.extents()
+        min_xyz =  obj.pos()-obj.extents()
+        min_max=np.hstack((min_xyz,max_xyz)).tolist()
+        #print min_max
+        return min_max
 
 if __name__ == '__main__':
   robo = HerbEnv()
