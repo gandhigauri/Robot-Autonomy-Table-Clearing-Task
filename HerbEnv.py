@@ -39,7 +39,6 @@ class HerbEnv(object):
         self.manip = right_manip
         self.robot.SetActiveManipulator('right_wam')
         self.end_effector = self.manip.GetEndEffector()
-
         self.robot.SetActiveDOFs(self.manip.GetArmIndices())
     
         self.robot.controller = openravepy.RaveCreateController(self.robot.GetEnv(), 'IdealController')
