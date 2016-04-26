@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import openravepy
 import numpy as np
 import time
@@ -6,16 +7,12 @@ import time
 openravepy.RaveInitialize(True, level=openravepy.DebugLevel.Info)
 openravepy.misc.InitOpenRAVELogging()
 
+print "HERBENV"
 
 class HerbEnv(object):
 
     def __init__(self):
         #self.fluent = Fluents()
-        self.openrave_init()
-	
-  
-
-    def openrave_init(self):
         self.env = openravepy.Environment()
         self.env.SetViewer('qtcoin')
         self.env.GetViewer().SetName('HPN Viewer')
@@ -107,6 +104,12 @@ class HerbEnv(object):
         #self.fluent.Overlaps(self.target_tray)
         #self.fluent.Holding(self.target_tray)
 
+        #self.openrave_init()
+        
+	
+    #def openrave_init(self):
+
+
     def bounding_box(self,body):
         obj  = body.ComputeAABB()
         max_xyz =  obj.pos()+obj.extents()
@@ -115,6 +118,4 @@ class HerbEnv(object):
         #print min_max
         return min_max
 
-if __name__ == '__main__':
-  robo = HerbEnv()
-  time.sleep(10000)
+

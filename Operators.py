@@ -1,27 +1,36 @@
-import Fluents from Fluents
-import time
-class Operators:
-    def __init__(self,object_id):#grid_map=[robot,object,washer,storage]
-        self.fluents=Fluents()
-        self.object_id=object_id
-	self.object_loc = [1,1]
-        self.washer_loc = [5,5]
-        self.storage_loc = [3,5]
-        self.robot_loc = [6,0]
-	self.grid_map=[self.robot_loc, self.object_loc, self.washer_loc, self.storage_loc]
-        self.washed=False
-        self.grasp=False    
-        
-    def Wash(self,self.object_loc):
-        if self.fluents.In(self.object_loc,self.washer_loc):
-            print "Washing" 
-            time.sleep(5)
-            self.washed=True
-            return self.washed
-        if self.washed:
-            print "Washed"
-        return self.washed
+#!/usr/bin/env python
 
-    def Pick(self,self.robo_loc,self.object_loc):
-        if self.fluents.Holding(self.grasp,self.object_id) and self.fluents.In()
-         
+from Fluents import Fluents
+import HerbEnv
+import time
+import openravepy
+import numpy as np
+import herbpy
+
+print "INSIDE OPERATOR"
+class Operators(object):
+    def __init__(self,object_id):
+        self.env=HerbEnv()
+        self.robot=env.robot
+        self.fluents=Fluents()
+        self.obj_list=env.obj_list
+
+        self.object_loc = object_id.GetTransform()[:,3]
+        self.tray_loc = env.target_tray.GetTransform()
+
+
+    def Pick(self,object_id,object_loc):
+
+        if (Fluents.Holding()==None) and (Fluents.In(object_id,object_loc)==True) and (Fluents.ClearX([object_id])==True):
+            #robot.Grasp(object_id,manip = robot.right_arm)
+            print "A has been moved" + str(object_id)
+        else:
+            print False
+
+    def Place(self,object_id,goal_loc):
+
+        if (Fluents.Holding()==object_id) and (Fluents.ClearX([object_id])==True):
+            #robot.place(object_id,goal_loc,manip = robot.right_arm)
+            print "A has been placed" + str(object_id)
+        else:
+            print False

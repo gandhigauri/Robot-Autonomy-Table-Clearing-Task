@@ -1,35 +1,99 @@
-#from DiscreteEnvironment import DiscreteEnvironment
-#from SimpleEnvironment import SimpleEnvironment
-#from HerbEnv import HerbEnv
+#!/usr/bin/env python
+from HerbEnv import HerbEnv
+import time
+import numpy as np
 
-class Fluents:
-    ''' so we have five fluents: In, Overlaps, ClearX, IsReachable, Holding
-    '''
+''' so we have following fluents: In, Overlaps, min_dist, ClearX, Holding
+'''
+
+print "INSIDE FLUENTS"
+
+class Fluents(object):
+
     def __init__(self):
-        self.herb_env = 1
+        self.herb_env = HerbEnv()
+
+
 
     def In(self,objname,region):
-        pos = objname.GetTransform()[:2,3]
-        if (pos[0] > region[0]) and (pos[0]< region[1]) and (pos[1]> region[2]) and (pos[1]< region[3]):
-            print("\n Object is in")
+        bound_obj=self.herb_env.bounding_box(objname)
+        if (bound_obj[0] >= region[0]) and (bound_obj[3]<= region[3]) and (bound_obj[1]>= region[1]) and (bound_obj[4] <= region[4]):
+            print "Object in is ", objname.GetName()
             return True
-        print("\n Object is not in")
-        return False 
+        print "Object not in is ", objname.GetName()
+        return False
+
 
     def Overlaps(self,objname):
-        obj  = objname.ComputeAABB()
-        max_xyz =  obj.pos()+obj.extents()
-        min_xyz =  obj.pos()-obj.extents()
-        # Swept region - entire region of table, minx,max,miny,maxy
-             
-        print "min  ", min_xyz
-        print "max  ", max_xyz                              
+        obj_pos=[]
+        sum_list=[]
+        n_dims=[3,len(self.herb_env.obj_list)]
+        dist_list=0
+        for n in n_dims:
+            dist_list = [dist_list] * n
+        obj_ind=self.herb_env.obj_list.index(objname)
+        for obj in self.herb_env.obj_list:
+            obj_pos.append(obj.GetTransform()[:3,3])
+        obj_pos=np.array(obj_pos)
+        for i,item_i in enumerate(obj_pos):
+            for j,item_j in enumerate(obj_pos):
+                dist_list[i][j]=np.linalg.norm(item_j-item_i)
+            sum_list.append(dist_list[i])
+        max_ind=sum_list.index(max(sum_list))
+        if obj_ind==max_ind:
+           print "object not overlapped is ", objname.GetName()
+           return False
+        else:
+            print "object overlapped is ", objname.GetName()
+            return True
+
+
+    def min_dist(self,objname):
+        robot_pose=self.herb_env.robot.GetTransform()[:3,3]
+        dist_list=[]
+        obj_ind=self.herb_env.obj_list.index(objname)
+        for obj in self.herb_env.obj_list:
+            obj_pos=obj.GetTransform()[:3,3]
+            dist_list.append(np.linalg.norm(robot_pose-obj_pos))
+        min_ind=dist_list.index(min(dist_list))
+        if obj_ind==min_ind:
+           print "object at min dist from robot is ", objname.GetName()
+           return True
+        else:
+            print "object not at min dist is ", objname.GetName()
+            return False
+
+
+    def ClearX(self,obj_list):
+        check_non=0
+        check_req=0
+        non_obj=[]
+        for req_obj in obj_list:
+            for obj in self.herb_env.obj_list:
+                if obj not in obj_list:
+                    non_obj.append(obj)
+                    if self.Overlaps(obj)==True: #can be changed with min_dist()
+                        check_non+=1
+            if check_non==len(non_obj):
+                check_req+=1
+        if check_req==len(obj_list):
+            print "its clear"
+            return True
+        else:
+            print "not clear"
+            return False
+
 
     def Holding(self):
-        for b in self.env.GetBodies():
-            if self.robot.IsGrabbing(b):
-                return b.GetName()
+        for b in self.herb_env.env.GetBodies():
+            if self.herb_env.robot.IsGrabbing(b):
+                print "holding ", b.GetName()
+                return b
+            print "hoding nothing"
             return None
 
-    #def IsReachable(objname):
 
+if __name__ == '__main__':
+  robo = Fluents()
+  print "fuvk this shut"
+  time.sleep(10000)
