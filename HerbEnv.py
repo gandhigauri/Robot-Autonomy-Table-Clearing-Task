@@ -7,12 +7,11 @@ import time
 openravepy.RaveInitialize(True, level=openravepy.DebugLevel.Info)
 openravepy.misc.InitOpenRAVELogging()
 
-print "HERBENV"
+print "INSIDE HERBENV"
 
 class HerbEnv(object):
 
     def __init__(self):
-        #self.fluent = Fluents()
         self.openrave_init()
         
 	
@@ -59,8 +58,7 @@ class HerbEnv(object):
                                    [ 0.94516159, -0.0901412 ,  0.31391738, -0.87847549],
                                    [ 0.02023372, -0.9431516 , -0.33174637,  1.61502194],
                                    [ 0.        ,  0.        ,  0.        ,  1.        ]])
-        '''
-        
+        '''   
         #import IPython
         #IPython.embed()
         #self.robot.GetEnv().GetViewer().SetCamera(camera_pose)
@@ -120,4 +118,8 @@ class HerbEnv(object):
         #print min_max
         return min_max
 
+def main():
+    HerbEnv()
 
+if __name__ == "__main__":
+    main()

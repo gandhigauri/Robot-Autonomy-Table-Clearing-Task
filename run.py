@@ -1,21 +1,27 @@
 #!/usr/bin/env python
-
-import openravepy
+import task_planning
+import herbpy
 from HerbEnv import HerbEnv
-from Planner import Planner
+from Planner import *
 
-def main(planning_env):
 
-    raw_input('Press any key to begin planning')
-    plan = Planner.Plan(planning_env,obj_list)
-    
+#robot.PlanToNamedConfiguration(home, execute = True)
+
+def main():
+	#import IPython
+	#IPython.embed()
+	#env, robot = herbpy.initialize(sim=True)
+	planning_env = HerbEnv()
+	obj_list = planning_env.obj_list
+
+	plan = Planner(planning_env,obj_list)
+	plan.Plan(obj_list)
+	time.sleep(10000)
+
     #traj = robot.ConvertPlanToTrajectory(plan)
     #robot.ExecuteTrajectory(traj)    
 
 if __name__ == "__main__":
 
-    planning_env = HerbEnv()
-    main(planning_env)
-
-    import IPython
-    IPython.embed()
+	main()   
+    

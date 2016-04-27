@@ -16,14 +16,11 @@ class Fluents(object):
     def In(self,objname,region):
         bound_obj=self.herb_env.bounding_box(objname)
 
-        import IPython
-        IPython.embed()
-
-        #if (bound_obj[0] >= region[0]) and (bound_obj[3]<= region[3]) and (bound_obj[1]>= region[1]) and (bound_obj[4] <= region[4]):
         if (bound_obj[0] >= region[0]) and (bound_obj[3]<= region[3]) and (bound_obj[1]>= region[1]) and (bound_obj[4] <= region[4]):
-            print "Object in is ", objname.GetName()
+        #if (region[0][3] >= bound_obj[0]) and (region[0][3]<= bound_obj[1]) and (region[1][3] >= bound_obj[2]) and (region[1][3]<= bound_obj[3]) and (region[2][3] >= bound_obj[4]) and (region[2][3]<= bound_obj[5]):  
+            print objname.GetName() + " is in"
             return True
-        print "Object not in is ", objname.GetName()
+        print objname.GetName() + " Object not in "
         return False
 
 
@@ -92,7 +89,7 @@ class Fluents(object):
             if self.herb_env.robot.IsGrabbing(b):
                 print "holding ", b.GetName()
                 return b
-            print "hoding nothing"
+            print "holding nothing"
             return None
 
 
