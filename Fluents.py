@@ -13,10 +13,13 @@ class Fluents(object):
     def __init__(self):
         self.herb_env = HerbEnv()
 
-
-
     def In(self,objname,region):
         bound_obj=self.herb_env.bounding_box(objname)
+
+        import IPython
+        IPython.embed()
+
+        #if (bound_obj[0] >= region[0]) and (bound_obj[3]<= region[3]) and (bound_obj[1]>= region[1]) and (bound_obj[4] <= region[4]):
         if (bound_obj[0] >= region[0]) and (bound_obj[3]<= region[3]) and (bound_obj[1]>= region[1]) and (bound_obj[4] <= region[4]):
             print "Object in is ", objname.GetName()
             return True

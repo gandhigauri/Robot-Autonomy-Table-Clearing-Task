@@ -21,22 +21,30 @@ class Planner(object):
         while(self.list):
             for i in range(len(self.list)):
                 start_loc = self.list[i].GetTransform()
-                if Operators.Pick(self.list[i], start_loc) == True:
+                op = Operators(self.list[1])
+
+                #import IPython
+                #IPython.embed()
+
+                op.Pick(self.list[i], goal_loc)
+
+                '''if Operators.Pick(self.list[i], start_loc) == True:
                     Operators.Place(self.list[i],goal_loc)
                     del self.list[i]
                 else: 
                     i = i+1
+                '''
 
 print "End of planner"
 
 
 def main():
-  robo = HerbEnv()
-  obj_list = robo.openrave_init.obj_list
-  plan123 = Planner(robo,obj_list)
-  plan123.Plan(obj_list)
-  print "**************HERB***********************"
-  time.sleep(10000)
+    robotEnv = HerbEnv()
+    obj_list = robotEnv.obj_list
+    plan = Planner(robotEnv,obj_list)
+    plan.Plan(obj_list)
+    print "**************HERB***********************"
+    time.sleep(10000)
 
 if __name__ == '__main__':
-  main()
+    main()

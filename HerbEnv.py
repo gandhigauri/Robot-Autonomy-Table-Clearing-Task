@@ -13,6 +13,10 @@ class HerbEnv(object):
 
     def __init__(self):
         #self.fluent = Fluents()
+        self.openrave_init()
+        
+	
+    def openrave_init(self):
         self.env = openravepy.Environment()
         self.env.SetViewer('qtcoin')
         self.env.GetViewer().SetName('HPN Viewer')
@@ -51,11 +55,15 @@ class HerbEnv(object):
         self.table.SetTransform(table_pose)
 
         # set the camera
-        camera_pose = np.array([[ 0.3259757 ,  0.31990565, -0.88960678,  2.84039211],
+        '''camera_pose = np.array([[ 0.3259757 ,  0.31990565, -0.88960678,  2.84039211],
                                    [ 0.94516159, -0.0901412 ,  0.31391738, -0.87847549],
                                    [ 0.02023372, -0.9431516 , -0.33174637,  1.61502194],
                                    [ 0.        ,  0.        ,  0.        ,  1.        ]])
-        self.robot.GetEnv().GetViewer().SetCamera(camera_pose)
+        '''
+        
+        #import IPython
+        #IPython.embed()
+        #self.robot.GetEnv().GetViewer().SetCamera(camera_pose)
 
         #add kinbodies
         #glass 1
@@ -72,21 +80,21 @@ class HerbEnv(object):
         self.target_kinbody2 = self.env.ReadKinBodyURI('models/data/objects/glass.kinbody.xml')
         self.target_kinbody2.SetName("glass2")
         self.robot.GetEnv().Add(self.target_kinbody2)
-        bowl_pose = np.array([[ 0, 0, 0, 0.5], 
+        glass_pose = np.array([[ 0, 0, 0, 0.5], 
                                   [-1, 0,  1, -0.4], 
                                   [ 0, 1,  0, 0.7165], 
                                   [ 0, 0,  0, 1]])
-        self.target_kinbody2.SetTransform(bowl_pose)
+        self.target_kinbody2.SetTransform(glass_pose)
 
         #glass 3
         self.target_kinbody3 = self.env.ReadKinBodyURI('models/data/objects/glass.kinbody.xml')
         self.target_kinbody2.SetName("glass3")
         self.robot.GetEnv().Add(self.target_kinbody3)
-        plate_pose = np.array([[ 0, 0, 0, 0.7], 
+        glass_pose = np.array([[ 0, 0, 0, 0.7], 
                                   [-1, 0,  1, -0.3], 
                                   [ 0, 1,  0, 0.7165], 
                                   [ 0, 0,  0, 1]])
-        self.target_kinbody3.SetTransform(plate_pose)
+        self.target_kinbody3.SetTransform(glass_pose)
 
         #add tray
         self.target_tray = self.env.ReadKinBodyURI('models/data/objects/wicker_tray.kinbody.xml')
@@ -103,12 +111,6 @@ class HerbEnv(object):
         #self.fluent.In(self.target_kinbody1,[0.5,0.8,-0.6,-0.3])
         #self.fluent.Overlaps(self.target_tray)
         #self.fluent.Holding(self.target_tray)
-
-        #self.openrave_init()
-        
-	
-    #def openrave_init(self):
-
 
     def bounding_box(self,body):
         obj  = body.ComputeAABB()
