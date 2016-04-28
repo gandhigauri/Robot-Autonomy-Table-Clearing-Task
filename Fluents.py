@@ -10,8 +10,8 @@ print "INSIDE FLUENTS"
 
 class Fluents(object):
 
-    def __init__(self):
-        self.herb_env = HerbEnv()
+    def __init__(self,env):
+        self.herb_env = env
 
     def In(self,objname,region):
         bound_obj=self.herb_env.bounding_box(objname)

@@ -14,7 +14,7 @@ class Operators(object):
         
         self.env=env
         self.robot=self.env.robot
-        self.fluents=Fluents()
+        self.fluents=Fluents(env)
         #self.obj_list=env.obj_list
 
         #self.object_loc = object_id.GetTransform()[:,3]
